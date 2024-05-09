@@ -1,2 +1,1 @@
-"# lib_mng" 
-"# lib_mng" 
+library management system using django python
