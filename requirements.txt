@@ -1,0 +1,12 @@
+altgraph==0.17.4
+asgiref==3.8.1
+Django==5.0.4
+gunicorn==22.0.0
+packaging==24.0
+pefile==2023.2.7
+pyinstaller==6.6.0
+pyinstaller-hooks-contrib==2024.4
+pywin32-ctypes==0.2.2
+setuptools==69.5.1
+sqlparse==0.5.0
+tzdata==2024.1
