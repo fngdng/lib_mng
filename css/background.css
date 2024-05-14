@@ -1,0 +1,7 @@
+.welp-background {
+    background-image: url('vju.webp');
+    background-size: cover; /* Adjust the background size */
+    background-position: center; /* Adjust the background position */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    /* Additional styles */
+}
