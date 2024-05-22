@@ -27,7 +27,7 @@ IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["libmng-17dd543752c2.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["libmnigger-f8c074ea2198.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition
