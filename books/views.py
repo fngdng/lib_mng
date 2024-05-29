@@ -12,6 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import date
 from django.core.paginator import Paginator
 from django import forms
+# encapsulation -dong goi
+# abstraction - truu tuong ; polymorphism - da hinh
 
 
 class ActionDispatchView(View):
@@ -44,6 +46,8 @@ class IssueForm(forms.Form):
 
 class ReturnForm(forms.Form):
     book_id = forms.IntegerField(widget=forms.HiddenInput)
+
+# inherits - ke thua
 
 
 class LibraryManagementView(ActionDispatchView):
@@ -107,7 +111,8 @@ class LibraryManagementView(ActionDispatchView):
                 elif User.objects.filter(email=email).exists():
                     messages.error(request, 'Email already registered')
                 else:
-                    User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password1)
+                    User.objects.create_user(
+                        first_name=first_name, last_name=last_name, username=username, email=email, password=password1)
                     messages.success(request, 'Registration successful')
                     return redirect('login')
         else:
@@ -130,11 +135,13 @@ class LibraryManagementView(ActionDispatchView):
                 else:
                     current_book.quantity -= 1
                     current_book.save()
-                    IssuedItem.objects.create(user_id=request.user, book_id=current_book)
+                    IssuedItem.objects.create(
+                        user_id=request.user, book_id=current_book)
                     messages.success(request, 'Book issued successfully')
         else:
             form = IssueForm()
-        my_items = IssuedItem.objects.filter(user_id=request.user, return_date__isnull=True).values_list('book_id', flat=True)
+        my_items = IssuedItem.objects.filter(
+            user_id=request.user, return_date__isnull=True).values_list('book_id', flat=True)
         books = Book.objects.exclude(id__in=my_items).filter(quantity__gt=0)
         return render(request, 'issue_item.html', {'form': form, 'books': books})
 
@@ -147,19 +154,22 @@ class LibraryManagementView(ActionDispatchView):
                 current_book = Book.objects.get(id=book_id)
                 current_book.quantity += 1
                 current_book.save()
-                issue_item = IssuedItem.objects.filter(user_id=request.user, book_id=current_book, return_date__isnull=True).first()
+                issue_item = IssuedItem.objects.filter(
+                    user_id=request.user, book_id=current_book, return_date__isnull=True).first()
                 if issue_item:
                     issue_item.return_date = date.today()
                     issue_item.save()
                     messages.success(request, 'Book returned successfully')
         else:
             form = ReturnForm()
-        my_items = IssuedItem.objects.filter(user_id=request.user, return_date__isnull=True).values_list('book_id', flat=True)
+        my_items = IssuedItem.objects.filter(
+            user_id=request.user, return_date__isnull=True).values_list('book_id', flat=True)
         books = Book.objects.filter(id__in=my_items)
         return render(request, 'return_item.html', {'form': form, 'books': books})
 
     def history(self, request):
-        my_items = IssuedItem.objects.filter(user_id=request.user).order_by('-issue_date')
+        my_items = IssuedItem.objects.filter(
+            user_id=request.user).order_by('-issue_date')
         paginator = Paginator(my_items, 10)
         page_number = request.GET.get('page')
         show_data_final = paginator.get_page(page_number)
